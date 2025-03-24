@@ -5,9 +5,38 @@ import { Cpu, Battery, Info, MapPin, ArrowLeft, ExternalLink } from "lucide-reac
 import Link from "next/link"
 import Image from "next/image"
 import { useParams } from "next/navigation"
+import { useRouter } from "next/navigation"
 
 export default function ResultsPage() {
+  const router = useRouter()
   const params = useParams()
+  
+  const disposalSites = [
+    {
+      name: "EcoTech Recycling Center",
+      address: "123 Green Street, Eco City",
+      distance: "1.2 miles away",
+      hours: "Open 9AM-5PM",
+    },
+    {
+      name: "City Hazardous Waste Facility",
+      address: "456 Recycle Avenue, Eco City",
+      distance: "2.8 miles away",
+      hours: "Open 8AM-6PM",
+    },
+    {
+      name: "GreenTech Electronics Store",
+      address: "789 Sustainable Road, Eco City",
+      distance: "3.5 miles away",
+      hours: "Open 10AM-8PM",
+    },
+
+  ]
+
+  const handleClick = () => {
+    router.push(`/check-in`)
+  }
+  
   return (
     <div className="min-h-screen bg-white">
       <main className="container mx-auto py-12 px-4">
@@ -99,35 +128,17 @@ export default function ResultsPage() {
             </div>
 
             <div className="space-y-4">
-              <div className="bg-white p-4 rounded-md">
-                <h3 className="font-semibold text-green-700">EcoTech Recycling Center</h3>
-                <p className="text-gray-600 mt-1">123 Green Street, Eco City</p>
-                <p className="text-gray-600">1.2 miles away • Open 9AM-5PM</p>
-                <Button variant="outline" className="mt-2 text-green-700 border-green-500">
-                  <ExternalLink className="mr-2 h-4 w-4" />
-                  Get Directions
-                </Button>
-              </div>
-
-              <div className="bg-white p-4 rounded-md">
-                <h3 className="font-semibold text-green-700">City Hazardous Waste Facility</h3>
-                <p className="text-gray-600 mt-1">456 Recycle Avenue, Eco City</p>
-                <p className="text-gray-600">2.8 miles away • Open 8AM-6PM</p>
-                <Button variant="outline" className="mt-2 text-green-700 border-green-500">
-                  <ExternalLink className="mr-2 h-4 w-4" />
-                  Get Directions
-                </Button>
-              </div>
-
-              <div className="bg-white p-4 rounded-md">
-                <h3 className="font-semibold text-green-700">GreenTech Electronics Store</h3>
-                <p className="text-gray-600 mt-1">789 Sustainable Road, Eco City</p>
-                <p className="text-gray-600">3.5 miles away • Open 10AM-8PM</p>
-                <Button variant="outline" className="mt-2 text-green-700 border-green-500">
-                  <ExternalLink className="mr-2 h-4 w-4" />
-                  Get Directions
-                </Button>
-              </div>
+              {disposalSites.map((site, index) => (
+                <div key={index} className="bg-white p-4 rounded-md">
+                  <h3 className="font-semibold text-green-700">{site.name}</h3>
+                  <p className="text-gray-600 mt-1">{site.address}</p>
+                  <p className="text-gray-600">{site.distance} • {site.hours}</p>
+                  <Button variant="outline" className="mt-2 text-green-700 border-green-500" onClick={handleClick}>  
+                    <ExternalLink className="mr-2 h-4 w-4" />
+                    Book an Appointment
+                  </Button>
+                </div>
+              ))}
             </div>
           </Card>
         </div>
@@ -142,4 +153,3 @@ export default function ResultsPage() {
     </div>
   )
 }
-
