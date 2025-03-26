@@ -10,8 +10,10 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { useRouter } from "next/navigation"
 
 export default function FacilityCheckIn() {
+  const router = useRouter()
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -29,11 +31,11 @@ export default function FacilityCheckIn() {
     e.preventDefault()
     // Handle form submission - would connect to backend in a real application
     console.log("Form submitted:", formData)
-    alert("Check-in successful! Thank you for recycling responsibly.")
+    router.push("/user-dashboard")
   }
 
   // Generate a random 6-digit OTP for display purposes
-  const otp = "384291"
+  const otp = "123456"
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-green-50 to-white">
