@@ -54,14 +54,12 @@ export default function ResultsPage() {
               {params.waste}
             </h2>
 
-            <div className="relative w-full h-64 mb-4 rounded-md overflow-hidden">
-              <Image src="/placeholder.svg?height=300&width=400" alt="Uploaded e-waste" fill className="object-cover" />
-            </div>
+          
 
             <div className="bg-white p-4 rounded-md">
               <h3 className="text-xl font-semibold text-green-700">{}</h3>
               <p className="text-gray-600 mt-2">
-                Lithium-ion battery from a laptop computer, containing hazardous materials that require proper disposal.
+                lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
               </p>
               <div className="mt-4 flex flex-wrap gap-2">
                 <span className="bg-green-100 text-green-800 px-2 py-1 rounded-full text-sm">Lithium-ion</span>
