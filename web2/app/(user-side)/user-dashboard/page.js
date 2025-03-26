@@ -45,6 +45,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog"
+import { useRouter } from "next/navigation"
 
 // Sample data for demonstration
 const userDisposalsData = [
@@ -148,6 +149,7 @@ const initialMessages = [
 ]
 
 export default function UserDashboard() {
+  const router = useRouter()
   const [disposals, setDisposals] = useState(userDisposalsData)
   const [selectedDisposal, setSelectedDisposal] = useState(null)
   const [isDetailOpen, setIsDetailOpen] = useState(false)
@@ -196,6 +198,17 @@ export default function UserDashboard() {
     })
   }
 
+  const disposalHistory = () => {
+    router.push("/user-dashboard/history")
+  }
+
+  const Myimpact = () => {
+    router.push("/user-dashboard/user-impact")
+  }
+
+  const disposalPage = () => {
+    router.push("/waste-analyze")
+  }
   const sendMessage = () => {
     if (!newMessage.trim()) return
 
@@ -252,6 +265,7 @@ export default function UserDashboard() {
               <Button
                 variant="ghost"
                 className="w-full justify-start text-green-700 hover:bg-green-100 hover:text-green-800"
+                onClick={() => disposalHistory()}
               >
                 <CheckCircle className="mr-2 h-4 w-4" />
                 Disposal History
@@ -259,6 +273,7 @@ export default function UserDashboard() {
               <Button
                 variant="ghost"
                 className="w-full justify-start text-green-700 hover:bg-green-100 hover:text-green-800"
+                onClick={() => Myimpact()}
               >
                 <BarChart3 className="mr-2 h-4 w-4" />
                 My Impact
@@ -416,7 +431,7 @@ export default function UserDashboard() {
                       <SelectItem value="cancelled">Cancelled</SelectItem>
                     </SelectContent>
                   </Select>
-                  <Button className="bg-green-600 hover:bg-green-700 text-white">
+                  <Button className="bg-green-600 hover:bg-green-700 text-white" onClick={disposalPage}>
                     <Plus className="mr-2 h-4 w-4" />
                     New Disposal
                   </Button>

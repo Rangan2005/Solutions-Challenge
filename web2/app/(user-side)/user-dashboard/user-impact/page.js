@@ -35,6 +35,7 @@ import {
   LineChart,
   Line,
 } from "recharts"
+import { useRouter } from "next/navigation"
 
 // Sample data for demonstration
 const impactData = {
@@ -132,6 +133,7 @@ const iconMap = {
 }
 
 export default function MyImpact() {
+  const router = useRouter()
   const [activeTab, setActiveTab] = useState("overview")
 
   // Get the icon component based on the icon name
@@ -140,12 +142,17 @@ export default function MyImpact() {
     return <IconComponent className="h-5 w-5" />
   }
 
+  
+  const redirectToDashboard = () => {
+    router.push("/user-dashboard")
+  }
+
   return (
     <div className="flex flex-col min-h-screen bg-green-50">
       <header className="bg-white border-b border-green-100 px-6 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Button variant="ghost" size="icon" className="text-green-700">
+            <Button variant="ghost" size="icon" className="text-green-700" onClick={() => redirectToDashboard()}>
               <ChevronLeft className="h-5 w-5" />
             </Button>
             <h1 className="text-xl font-semibold text-green-800">My Environmental Impact</h1>

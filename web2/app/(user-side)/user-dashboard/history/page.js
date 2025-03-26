@@ -32,6 +32,7 @@ import {
   Cell,
   Legend,
 } from "recharts"
+import { useRouter } from "next/navigation"
 
 // Sample data for demonstration
 const disposalHistoryData = [
@@ -171,6 +172,7 @@ const wasteTypeData = [
 const COLORS = ["#16a34a", "#22c55e", "#4ade80", "#86efac", "#bbf7d0", "#dcfce7"]
 
 export default function DisposalHistory() {
+  const router=useRouter();
   const [disposals, setDisposals] = useState(disposalHistoryData)
   const [selectedYear, setSelectedYear] = useState("2025")
   const [selectedWasteType, setSelectedWasteType] = useState("all")
@@ -215,12 +217,16 @@ export default function DisposalHistory() {
     setIsDetailOpen(true)
   }
 
+  const redirectToDashboard = () => {
+    router.push("/user-dashboard")
+  }
+
   return (
     <div className="flex flex-col min-h-screen bg-green-50">
       <header className="bg-white border-b border-green-100 px-6 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Button variant="ghost" size="icon" className="text-green-700">
+            <Button variant="ghost" size="icon" className="text-green-700" onClick={() => redirectToDashboard()}>
               <ChevronLeft className="h-5 w-5" />
             </Button>
             <h1 className="text-xl font-semibold text-green-800">Disposal History</h1>
