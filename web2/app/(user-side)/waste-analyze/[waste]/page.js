@@ -40,7 +40,7 @@ export default function ResultsPage() {
   return (
     <div className="min-h-screen bg-white">
       <main className="container mx-auto py-12 px-4">
-        <Link href="/">
+        <Link href="/waste-analyze" className="mb-6">
           <Button variant="ghost" className="mb-6 text-green-700">
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Upload
