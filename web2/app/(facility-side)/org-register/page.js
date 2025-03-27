@@ -1,9 +1,8 @@
 "use client"
 
 import { useState } from "react"
-import { useForm } from "react-hook-form"
+import { useForm, Controller } from "react-hook-form"
 import { MapPin, Upload, CheckCircle, ArrowRight } from "lucide-react"
-
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -15,10 +14,12 @@ export default function StakeholderRegistration() {
   const [step, setStep] = useState(1)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const [isComplianceChecked, setIsComplianceChecked] = useState(false)
 
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -39,6 +40,11 @@ export default function StakeholderRegistration() {
   })
 
   const onSubmit = async (data) => {
+    if (!isComplianceChecked) {
+      alert("Please agree to the compliance terms before submitting.")
+      return
+    }
+
     setIsSubmitting(true)
     // Simulate API call
     await new Promise((resolve) => setTimeout(resolve, 2000))
@@ -78,9 +84,9 @@ export default function StakeholderRegistration() {
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-green-50 to-white">
       <Card className="w-full max-w-3xl shadow-lg">
         <CardHeader className="bg-green-600 text-white rounded-t-lg">
-          <CardTitle className="text-2xl font-bold">E-Waste Recycler Registration</CardTitle>
+          <CardTitle className="text-2xl font-bold">Terra Facility Registration</CardTitle>
           <CardDescription className="text-green-100">
-            Register your facility as a certified e-waste recycler
+            Register your facility as a Terra certified e-waste recycler
           </CardDescription>
         </CardHeader>
         <CardContent className="pt-6">
@@ -242,18 +248,24 @@ export default function StakeholderRegistration() {
               <div className="space-y-4">
                 <div className="space-y-2">
                   <Label htmlFor="certifications">Current Certifications</Label>
-                  <Select onValueChange={(value) => register("certifications").onChange({ target: { value } })}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select certifications" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="iso14001">ISO 14001</SelectItem>
-                      <SelectItem value="r2">R2 (Responsible Recycling)</SelectItem>
-                      <SelectItem value="e-stewards">e-Stewards</SelectItem>
-                      <SelectItem value="weelabex">WEELABEX</SelectItem>
-                      <SelectItem value="none">None</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <Controller
+                    name="certifications"
+                    control={control}
+                    render={({ field }) => (
+                      <Select onValueChange={field.onChange} value={field.value}>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select certifications" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="iso14001">ISO 14001</SelectItem>
+                          <SelectItem value="r2">R2 (Responsible Recycling)</SelectItem>
+                          <SelectItem value="e-stewards">e-Stewards</SelectItem>
+                          <SelectItem value="weelabex">WEELABEX</SelectItem>
+                          <SelectItem value="none">None</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    )}
+                  />
                 </div>
 
                 <div className="space-y-2">
@@ -286,7 +298,12 @@ export default function StakeholderRegistration() {
                   <Label>Compliance Agreement</Label>
                   <div className="border rounded-md p-4 bg-gray-50">
                     <div className="flex items-start space-x-3">
-                      <input type="checkbox" className="mt-1" />
+                      <input 
+                        type="checkbox" 
+                        className="mt-1" 
+                        checked={isComplianceChecked}
+                        onChange={(e) => setIsComplianceChecked(e.target.checked)}
+                      />
                       <div>
                         <p className="text-sm">
                           I certify that all information provided is accurate and complete. I agree to comply with all
@@ -315,7 +332,11 @@ export default function StakeholderRegistration() {
                   Continue <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               ) : (
-                <Button type="submit" className="ml-auto bg-green-600 hover:bg-green-700" disabled={isSubmitting}>
+                <Button 
+                  type="submit" 
+                  className="ml-auto bg-green-600 hover:bg-green-700" 
+                  disabled={isSubmitting || !isComplianceChecked}
+                >
                   {isSubmitting ? "Submitting..." : "Submit Application"}
                 </Button>
               )}
